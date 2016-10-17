@@ -1,0 +1,33 @@
+<div id="statistics">
+
+    <div class="container">
+        <div class="table2">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th ng-repeat="naglowek in [ 'Total Amount', 'Male Amount', 'Female Amount']  ">
+                        {{naglowek}}
+                    </th>
+
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="amount" ng-bind="totalAmount()"></div>
+                    </td>
+                    <td>
+                        <div class="amount" ng-bind="maleAmount()"></div>
+                    </td>
+                    <td>
+                        <div class="amount" ng-bind="femaleAmount()"></div>
+                    </td>
+
+
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+    </div>

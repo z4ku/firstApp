@@ -1,1 +1,157 @@
-<p>This is the partial for view 1.</p>
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+
+</head>
+
+<body ng-app="myApp.view1" ng-controller="first1Ctrl">
+
+
+<div class="container">
+
+    <div class="row row-width">
+        <div class="form-group">
+            <label for="serach" class="col-sm-1 control-label">Serach people: </label>
+            <div class="col-sm-4">
+                <input type="text" id="serach" class="form-control" placeholder="Serach" ng-model="wyszukiwarka">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="table1">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th ng-click="sortData('name')">
+                            Name
+                            <div ng-class="getSortClass('name')"></div>
+                        </th>
+                        <th ng-click="sortData('surname')">
+                            Surname
+                            <div ng-class="getSortClass('surname')"></div>
+                        </th>
+                        <th ng-click="sortData('pesel')">
+                            Pesel
+                            <div ng-class="getSortClass('pesel')"></div>
+                        </th>
+                        <th ng-click="sortData('gender')">
+                            Gender
+                            <div ng-class="getSortClass('gender')"></div>
+                        </th>
+                        <th>To remove</th>
+                        <th>Edit</th>
+                    </tr>
+
+
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="item in list | filter: wyszukiwarka | orderBy:sortColumn:reverseSort">
+                        <td ng-hide="viewFiled"> {{item.name}}</td>
+                        <td>{{item.surname}}</td>
+                        <td>{{item.pesel}}</td>
+                        <td><img style="width: 50px; height: 50px" src="{{item.gender | genderToImg}}"/></td>
+                        <td>
+                            <input name="all" type="checkbox" ng-checked="master" ng-model="checkboxesModel[item.id]"/>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" ng-hide="viewField" ng-click="editUser(item)">Edit</button>
+
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+
+        <div class="col-xs-6 row2">
+            <form name="myForm" class="form-horizontal" ng-submit="submitForm()" novalidate>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label"
+                           ng-class="{ 'has-error' : myForm.name.$invalid && !myForm.name.$pristine }">Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="name" class="form-control" id="inputEmail3" ng-model="newItem.name"
+                               placeholder="Name" required>
+                        <p ng-show="myForm.name.$invalid && !myForm.name.$pristine" class="help-block">You name is
+                            required.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Surname</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="surname" class="form-control" id="inputPassword3"
+                               ng-model="newItem.surname"
+                               placeholder="Surname" required>
+                        <p ng-show="myForm.surname.$invalid && !myForm.surname.$pristine" class="help-block">You surname
+                            is required.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Pesel</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="pesel" ng-model="newItem.pesel"
+                               placeholder="Pesel" pesel-validation="">
+                        <span ng-show="myForm.pesel.$error.pesValid" class="help-block">invalid pesel!</span>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Female</label>
+                    <div class="col-sm-4">
+                        <label>
+                            <input type="radio" ng-model="newItem.gender" value="female" required>
+                            Female
+                        </label><br/>
+                        <label>
+                            <input type="radio" ng-model="newItem.gender" value="male" required>
+                            Male
+                        </label><br/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button ng-click="cancel(user)" class="btn btn-warning"> Cancel</button>
+                        <button class="btn btn-primary" name="buttonSave"ng-disabled="myForm.$invalid" ng-click="save(newItem)">Send
+                        </button>
+                    </div>
+                    <div class="remove-button">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Sellect all to remove</label>
+                        <input type="checkbox" ng-model="master" ng-click="selectAllRows()"/>
+                        <button class="btn btn-danger" ng-click="remove()">Remove</button>
+                    </div>
+
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <p>
+        <people-Amount people="list"/>
+    </p>
+
+</div>
+</body>
+
+
+</html>
